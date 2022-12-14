@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 app = FastAPI()
 
@@ -18,5 +18,9 @@ async def root():
     return {"message": "Hello World"}
 
 @app.get("/get-employee/{emp_id}")
-async def get_employee(emp_id: int):
+async def get_employee(emp_id: int = Path(None,
+    description="The ID of an employee you want to view.",
+    gt=0,
+    lt=3)):
+    
     return employees[emp_id]
